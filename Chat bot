@@ -1,0 +1,153 @@
+#ALL IMPORTS
+import webbrowser
+import pwinput
+
+#LOGIN SUBROUTINE
+def login():
+    username = input("Please enter your username\n")
+    password = pwinput.pwinput(prompt="Please enter your password\n")
+    with open("username_pw.txt","r") as txt:
+        data = txt.read()
+        datalist = data.split()
+       
+        print(datalist)
+        
+        if datalist[0] == username and datalist[1] == password:
+            return True
+        else:
+            return False
+ #Asks the user to enter a username and password and sanitising the password
+
+
+#FOOD CHOICE SUBROUTINE
+def Choose_Food():
+    #Function to ask user food type and return to main
+    print("**********************************")
+    print("WELCOME TO AUTOMATED FOOD SERVICES")
+    print("**********************************")
+    
+  
+    reply = "0"
+    while reply != "1" and reply != "2" and reply != "3" and reply != "4":
+
+      print("+-----------------------------------------+")
+      print("|    Choose a Food type                   |")
+      print("|    Choose an option:                    |")
+      print("|     1   Pizza                           |")
+      print("|     2   Burgers                         |") 
+      print("|     3   Pasta                           |")   
+      print("|     4   Chicken                         |")    
+      print("+-----------------------------------------+")
+
+      reply = (input("Please enter a valid option (1-4)\n"))
+      if reply == "1":
+        return "pizza"
+        
+      elif reply == "2":
+        return "burgers"
+        
+      elif reply == "3":
+        return "pasta"
+        
+      elif reply == "4":
+        return "chicken"
+
+      else:
+        print("Please enter a valid option (1-4)")
+#asks the user to type 1,2,3,4 then saves the option 
+
+def Choose_Location():
+    #Function to ask location and return to main
+     reply = "0"
+     while reply != "1" and reply != "2" and reply != "3" and reply != "4":
+      print("+-----------------------------------------+")
+      print("|    Choose a Location                    |")
+      print("|    Choose an option:                    |")
+      print("|     1   Waterlooville                   |")
+      print("|     2   Havant                          |") 
+      print("|     3   Leigh Park                      |")   
+      print("|     4   Bedhampton                      |")    
+      print("+-----------------------------------------+")
+
+      reply = (input("Please enter a valid option (1-4)\n"))
+      if reply == "1":
+        return "Waterlooville"
+        
+      elif reply == "2":
+        return "Havant"
+        
+      elif reply == "3":
+        return "Leigh Park"
+        
+      elif reply == "4":
+        return "Bedhampton"
+
+      else:
+        print("Please enter a valid option (1-4)")
+#asks the user to type 1,2,3,4 then saves the option 
+
+def Choose_Budget():
+    #Function to ask user budget and return to main
+     reply = "0"
+     while reply != "1" and reply != "2" and reply != "3" and reply != "4":
+
+      print("+-----------------------------------------+")
+      print("|    Choose a Budget                      |")
+      print("|    Choose an option:                    |")
+      print("|     1   >£5                             |")
+      print("|     2   £5-£10                          |") 
+      print("|     3   £10-£15                         |")   
+      print("|     4   No budget                       |")    
+      print("+-----------------------------------------+")
+
+      reply = (input("Please enter a valid option (1-4)\n"))
+      if reply == "1":
+        return "0-5"
+        
+      elif reply == "2":
+        return "5-10"
+        
+      elif reply == "3":
+        return "10-15"
+        
+      elif reply == "4":
+        return "No_budget"
+
+      else:
+        print("Please enter a valid option (1-4)")
+#asks the user to type 1,2,3,4 then saves the option 
+
+def FindResta(fchoice, fbudget, flocation):
+    #Filters the information and opens the relative webiste pre set on the text file
+    print(fchoice + fbudget + flocation)
+    for line in open('rest.txt',"r").readlines(): # Read the lines
+        rest_info = line.split() # Split on the space, and store the results in a list of strings
+        print(rest_info)
+       
+        if fchoice == rest_info[0] and fbudget == rest_info[2] and flocation == rest_info[1]:
+            print("Restaurant found for type: "+ rest_info[0])
+            print("Restaurant found  name: "+ rest_info[4])
+            print("Restaurant found URL : "+ rest_info[3])
+            print("Restaurant found location: "+ rest_info[1])
+            URL = rest_info[3]
+            webbrowser.open(URL)
+
+###########################################################
+#
+#           MAIN
+#
+###########################################################
+SecurityDetails = login()
+#
+if SecurityDetails == True:
+    #open main choose food#
+    Food= Choose_Food()
+    Loc= Choose_Location()
+    Bud= Choose_Budget()
+    print(Food,Loc,Bud)
+
+    FindResta(Food, Bud, Loc)
+else:
+    print("Access Denied")
+
+
